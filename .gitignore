@@ -1,0 +1,83 @@
+# -------------------------
+# Python / Django
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+.env.*        
+
+# Django static files output
+staticfiles/
+media/
+static/
+
+# Django SQLite DB (optional – ignore if you want to track it)
+db.sqlite3
+
+# Local settings
+local_settings.py
+
+# Logs
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Unit test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# -------------------------
+# IDE / Editor
+# -------------------------
+
+# VS Code
+.vscode/
+.code-workspace
+
+# PyCharm
+.idea/
+
+# -------------------------
+# OS system files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# JavaScript / Node
+# (in case you add builds later)
+# -------------------------
+node_modules/
+dist/
+build/
+
+# -------------------------
+# Deployment
+# -------------------------
+*.sqlite3
+*.bak
+*.swp
+
+# If using Docker
+docker-compose.override.yml
