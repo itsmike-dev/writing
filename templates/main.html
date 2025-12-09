@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Essay Writing - Practice</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="main-body">
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="48" height="48" rx="12" fill="url(#gradient)"/>
+                        <path d="M24 14L18 20H22V28H26V20H30L24 14Z" fill="white"/>
+                        <path d="M18 30L24 36L30 30H26V22H22V30H18Z" fill="white" opacity="0.8"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#667eea"/>
+                                <stop offset="1" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="site-title">IELTS Essay Writing</h1>
+            </div>
+
+            <nav class="main-nav">
+                <a href="#practiceSection" class="nav-link active">Practice</a>
+                <a href="#evalOutput" class="nav-link">AI Feedback</a>
+                <a href="#contactSection" class="nav-link">Contact</a>
+            </nav>
+            <div class="header-controls">
+                <div class="word-count-display">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 4H18M2 8H12M2 12H16M2 16H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="word-count-number" id="wordCount">0</span>
+                    <span class="word-count-label">words</span>
+                </div>
+                <div class="timer-display" id="timerDisplay">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span id="timerText">00:00:00</span>
+                </div>
+                <button class="btn-secondary" id="timerBtn">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Timer
+                </button>
+                <button class="btn-primary" id="evaluateBtn">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2L12.09 7.26L18 8.27L14 12.14L14.91 18.02L10 15.77L5.09 18.02L6 12.14L2 8.27L7.91 7.26L10 2Z" fill="currentColor"/>
+                    </svg>
+                    Evaluate Essay
+                </button>
+                <form id="logoutForm" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-outline" id="logoutBtn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="practiceSection">
+        <div class="content-wrapper">
+            <!-- Left Side - Topic Section -->
+            <div class="topic-section">
+                <div class="topic-header">
+                    <h2>Essay Topic</h2>
+                    <div class="task-selector">
+                        <button class="task-btn active" data-task="1" id="task1Btn">Task 1</button>
+                        <button class="task-btn" data-task="2" id="task2Btn">Task 2</button>
+                    </div>
+                </div>
+                
+                <div class="topic-content">
+                    <!-- Task 1 Content -->
+                    <div class="task-content active" id="task1Content">
+                        <div class="upload-area" id="task1Upload">
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Upload Task 1 Topic</h3>
+                            <p>Upload an image or document containing your Task 1 essay topic</p>
+                            <input type="file" id="task1FileInput" accept="image/*,.pdf,.doc,.docx" hidden>
+                            <button class="btn-upload" onclick="document.getElementById('task1FileInput').click()">
+                                Choose File
+                            </button>
+                            <p class="upload-hint">Supported: JPG, PNG, PDF, DOC, DOCX</p>
+                        </div>
+                        <div class="topic-display" id="task1Display" style="display: none;">
+                            <div class="topic-image-wrapper">
+                                <img id="task1Image" src="" alt="Task 1 Topic">
+                                <button class="btn-remove" id="removeTask1">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="topic-text-area">
+                            <label for="task1Text">Or type/paste Task 1 topic here:</label>
+                            <textarea 
+                                id="task1Text" 
+                                class="topic-text-input" 
+                                placeholder="Enter Task 1 essay topic (e.g., chart description, graph analysis, process description)..."
+                                rows="6"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Task 2 Content -->
+                    <div class="task-content" id="task2Content">
+                        <div class="topic-text-area">
+                            <label for="task2Text">Type/paste Task 2 topic here:</label>
+                            <textarea 
+                                id="task2Text" 
+                                class="topic-text-input" 
+                                placeholder="Enter Task 2 essay topic (e.g., argumentative essay, discussion essay, problem-solution essay)..."
+                                rows="8"
+                            ></textarea>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+            <!-- Right Side - Essay Writing Area -->
+            <div class="essay-section">
+                <div class="essay-header">
+                    <h2 id="essayTitle">Your Essay — Task 1</h2>
+                    <div class="essay-actions">
+                        <button class="btn-icon" id="clearBtn" title="Clear essay">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <button class="btn-icon" id="saveBtn" title="Save essay">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 3H3C2.44772 3 2 3.44772 2 4V16C2 16.5523 2.44772 17 3 17H17C17.5523 17 18 16.5523 18 16V6L17 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 17V10H8V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 7H18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="essay-editor-wrapper">
+                    <textarea 
+                        id="essayEditor" 
+                        class="essay-editor" 
+                        placeholder="Start writing your Task 1 essay here...Tip: Use the timer to practice under exam conditions. Aim for about 150 words for Task 1."
+                        spellcheck="true"
+                    ></textarea>
+                </div>
+                <div class="essay-footer">
+                    <div class="essay-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Characters:</span>
+                            <span class="stat-value" id="charCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Paragraphs:</span>
+                            <span class="stat-value" id="paraCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Reading Time:</span>
+                            <span class="stat-value" id="readingTime">0 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inline Evaluation Panel -->
+        <section class="evaluation-inline">
+            <div class="evaluation-inline-header">
+                <div>
+                    <h3>AI Evaluation</h3>
+                    <p class="muted">Send your current essay to AI and view the feedback below.</p>
+                </div>
+                <button class="btn-primary" id="evaluateBtnInline">Evaluate Essay</button>
+            </div>
+            <div class="evaluation-inline-body">
+                <label class="stat-label" for="evalOutput">Feedback</label>
+                <textarea id="evalOutput" class="evaluation-output" placeholder="AI feedback will appear here..." readonly></textarea>
+                <div class="evaluation-status" id="evalStatus">Awaiting request.</div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contactSection">
+            <div class="contact-card">
+                <h3>Contact the Developer</h3>
+                <p class="muted">Have questions or suggestions? Reach out anytime.</p>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <span class="contact-label"><i class="fa-solid fa-envelope icons"></i> Email</span>
+                        <a href="mailto:rahmonovmuhammadali85@gmail.com" class="contact-link">muhammad@email.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label"><i class="fa-brands fa-telegram icons"></i> Telegram</span>
+                        <a href="https://t.me/Rahmonov_Muhammadali" class="contact-link" target="_blank" rel="noopener">t.me/muhammad</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label"><i class="fa-brands fa-instagram icons"></i> Instagram</span>
+                        <a href="https://instagram.com/rahmonov_6740" class="contact-link" target="_blank" rel="noopener">@muhammad</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Create with ❤️ by Muhammad</p>
+    </footer>
+
+    <!-- Timer Modal -->
+    <div class="modal-overlay" id="timerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Set Timer</h3>
+                <button class="modal-close" id="closeTimerModal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="timer-presets">
+                    <button class="preset-btn" data-minutes="20">20 min (Task 1)</button>
+                    <button class="preset-btn" data-minutes="40">40 min (Task 2)</button>
+                    <button class="preset-btn" data-minutes="60">60 min (Both Tasks)</button>
+                </div>
+                <div class="timer-custom">
+                    <label>Custom Time:</label>
+                    <div class="time-input-group">
+                        <div class="time-input">
+                            <label>Hours</label>
+                            <input type="number" id="timerHours" min="0" max="23" value="0">
+                        </div>
+                        <div class="time-input">
+                            <label>Minutes</label>
+                            <input type="number" id="timerMinutes" min="0" max="59" value="20">
+                        </div>
+                        <div class="time-input">
+                            <label>Seconds</label>
+                            <input type="number" id="timerSeconds" min="0" max="59" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelTimer">Cancel</button>
+                <button class="btn-primary" id="startTimer">Start Timer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/2f3f647d88.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
